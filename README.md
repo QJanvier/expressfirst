@@ -4,7 +4,7 @@ Bienvenue dans ce tutoriel 👋 nous allons voir comment configurer un serveur a
 
 ## Prérequis
 
-NodeJs doit être installer sur votre ordinateur. Je vous invite à voir <a target="blank" href="https://www.youtube.com/watch?v=lULBx0aXQJc&t=278s">le tuto de la chaîne</a>, pour commencer avec NodeJs.
+NodeJs doit être installer sur votre ordinateur.
 
 ## Installation
 Installation rapide d'un serveur grace à express.
