@@ -1,10 +1,16 @@
 const express = require('express')
 const path = require('path')
 const app = express()
- 
-app.use(express.static('public'))
+
+app.use(express.json())
+
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'))
+  res.send('Hello World!')
+})
+
+app.post('/user', function (req, res) {
+  console.log(req.body)
+  res.end()
 })
  
 app.listen(3000, console.log('Server running on port 3000'))
