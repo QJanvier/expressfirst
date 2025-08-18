@@ -10,10 +10,11 @@ const myMiddleware = (req, res, next) => {
   next()
 }
 
-app.use(myMiddleware)
+// app.use(myMiddleware)
 
 app.get('/', function (req, res) {
-  // res.send('Hello World!')
+  res.cookie('name', 'express', { domain: 'localhost', path: '/' })
+  res.end()
 })
 
 app.post('/user',function (req, res) {
