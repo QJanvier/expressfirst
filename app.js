@@ -4,11 +4,19 @@ const app = express()
 
 app.use(express.json())
 
+const myMiddleware = (req, res, next) => {
+  res.send('Ok')
+  console.log(Date.now())
+  next()
+}
+
+app.use(myMiddleware)
+
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  // res.send('Hello World!')
 })
 
-app.post('/user', function (req, res) {
+app.post('/user',function (req, res) {
   console.log(req.body)
   res.end()
 })
