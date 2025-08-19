@@ -1,16 +1,26 @@
 const express = require('express')
-const user = require('./user.js')
 const app = express()
 
 app.use(express.json())
-app.use(user)
 
 const PORT =  process.env.PORT || 3000
 
 app.listen(PORT, console.log(`Server running on port ${PORT}`))
 
-app.get('/', function (req, res) {
+app.get('/',  (req, res) =>{
+  res.status(201).send({msg: 'Hello World'})
   res.cookie('name', 'express', { domain: 'localhost', path: '/' })
-  res.end()
 })
 
+app.get('/api/users', (req, res) => {
+  res.send([
+    { id: 1, username: 'John Doe', displayName: 'John' },
+    { id: 2, username: 'Jane Doe', displayName: 'Jane' }
+  ])
+})
+
+app.get('/api/products', (req, res) => {
+  res.send([{
+    id:123, name: 'chicken breast', price: 12
+  }])
+})
