@@ -9,6 +9,7 @@ const mockUsers = [
   { id: 1, username: 'John Doe', displayName: 'John' },
   { id: 2, username: 'Jane Doe', displayName: 'Jane' }
 ]
+//array of users
 
 app.listen(PORT, console.log(`Server running on port ${PORT}`))
 
