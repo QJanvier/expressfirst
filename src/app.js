@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 app.use(express.json())
-
+//middleware to parse JSON bodies
 const PORT =  process.env.PORT || 3000
 
 const mockUsers = [
@@ -12,7 +12,6 @@ const mockUsers = [
   { id: 4, username: 'Bob Johnson', displayName: 'Bob' },
   { id: 5, username: 'Charlie Brown', displayName: 'Charlie' }
 ]
-//array of users
 
 app.listen(PORT, console.log(`Server running on port ${PORT}`))
 
@@ -29,6 +28,17 @@ app.get('/api/users', (req, res) => {
     mockUsers.filter((user) => user[filter].includes(value))
   )
   return res.send(mockUsers)  
+})
+
+app.post('/api/users', (req, res) => {
+  console.log(req.body)
+  const { body } = req
+  const newUser = {
+    id: mockUsers.length + 1,
+    ...req.body
+  }
+  mockUsers.push(newUser)
+  return res.status(201).send(newUser)
 })
 
 app.get('/api/users/:id', (req, res) => {
