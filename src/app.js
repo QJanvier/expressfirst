@@ -84,3 +84,17 @@ app.patch('/api/users/:id', (req, res) => {
   mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body }
   return res.sendStatus(200)
 })
+
+app.delete('/api/users/:id', (req, res) => {
+  const {
+  params: { id }
+  } = req
+  const parsedID = parseInt(id)
+  if (isNaN(parsedID)) 
+    return res.sendStatus(400)
+  const findUserIndex = mockUsers.findIndex((user) => user.id === parsedID)
+  if (findUserIndex === -1)
+    return res.sendStatus(404)
+  mockUsers.splice(findUserIndex, 1)
+  return res.sendStatus(204)
+})
