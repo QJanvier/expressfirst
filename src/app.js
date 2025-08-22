@@ -1,4 +1,6 @@
 const express = require('express')
+const { query, validationResult, body, matchedData, checkSchema } = require('express-validator')
+const { createUserValidationSchema } = require('./utils/validationSchemas')
 const app = express()
 
 app.use(express.json())
@@ -38,8 +40,16 @@ app.get('/',  (req, res) =>{
   res.cookie('name', 'express', { domain: 'localhost', path: '/' })
 })
 
-app.get('/api/users', (req, res) => {
-  console.log(req.query)
+app.get('/api/users', 
+  query('filter')
+    .isString()
+    .notEmpty()
+    .withMessage('Filter must be a non-empty string')
+    .isLength({ min: 3, max: 10 })
+    .withMessage('Filter must be between 3 and 10 characters')
+    , (req, res) => {
+  const result = validationResult(req)
+  console.log(result)
   const { query: { filter, value } } = req
 
   if (!filter && value) return res.send(
@@ -49,12 +59,17 @@ app.get('/api/users', (req, res) => {
 })
 
 
-app.post('/api/users', (req, res) => {
-  console.log(req.body)
-  const { body } = req
+app.post('/api/users', checkSchema(createUserValidationSchema), (req, res) => {
+  
+  const result = validationResult(req)
+  console.log(result)
+  if (!result.isEmpty()) {
+    return res.status(400).send({ errors: result.array() })
+  }
+  const data = matchedData(req)
   const newUser = {
     id: mockUsers.length + 1,
-    ...req.body
+    ...data
   }
   mockUsers.push(newUser)
   return res.status(201).send(newUser)
