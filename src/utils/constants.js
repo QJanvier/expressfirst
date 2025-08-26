@@ -1,8 +1,8 @@
 const mockUsers = [
-  { id: 1, username: 'John Doe', displayName: 'John' },
-  { id: 2, username: 'Jane Doe', displayName: 'Jane' },
-  { id: 3, username: 'Alice Smith', displayName: 'Alice' },
-  { id: 4, username: 'Bob Johnson', displayName: 'Bob' },
-  { id: 5, username: 'Charlie Brown', displayName: 'Charlie' }
+  { id: 1, username: 'John Doe', displayName: 'John', password:'hello123' },
+  { id: 2, username: 'Jane Doe', displayName: 'Jane', password:'hello124' },
+  { id: 3, username: 'Alice Smith', displayName: 'Alice', password:'hellohello' },
+  { id: 4, username: 'Bob Johnson', displayName: 'Bob', password:'test123' },
+  { id: 5, username: 'Charlie Brown', displayName: 'Charlie', password:'hello321' }
 ]
 module.exports = { mockUsers }
