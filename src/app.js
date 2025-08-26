@@ -2,6 +2,7 @@ const express = require('express')
 const routes = require('../src/routes/index')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const passport = require('passport')
 const { mockUsers } = require('./utils/constants')
 const app = express()
 
@@ -15,6 +16,8 @@ app.use(session(
     resave: false,
     cookie: { maxAge: 60000 * 60 }}
 ))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(routes)
 
 const PORT =  process.env.PORT || 3000
