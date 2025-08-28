@@ -1,5 +1,8 @@
+const express = require('express')
 const passport = require('passport')
 const localStrategy = require('../strategies/local-strategy')
+const app = express()
+
 
 app.use(passport.initialize())
 app.use(passport.session())

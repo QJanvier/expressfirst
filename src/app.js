@@ -3,9 +3,14 @@ const routes = require('../src/routes/index')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
+const mongoose = require('mongoose')
 const localStrategy = require('./strategies/local-strategy')
 const { mockUsers } = require('./utils/constants')
 const app = express()
+
+mongoose.connect('mongodb://localhost/express')
+  .then(() => console.log('Connected to database'))
+  .catch((err) => console.log('Error ${err}'))
 
 app.use(express.json())
 //middleware to parse JSON bodies
