@@ -3,7 +3,8 @@ const { query, validationResult, checkSchema, matchedData } = require('express-v
 const { mockUsers } = require('../utils/constants');
 const { createUserValidationSchema } = require('../utils/validationSchemas');
 const { resolveIndexByUserId } = require('../utils/middlewares');
-const User = require('../mongoose/schemas/user');
+const { hashPassword } = require('../utils/helpers');
+const {User} = require('../mongoose/schemas/user');
 
 router.get('/api/users',
     query('filter')
@@ -45,8 +46,10 @@ router.post('/api/users', checkSchema(createUserValidationSchema), async (req, r
     return res.status(400).send({ errors: result.array() })
   }
   const data= matchedData(req)
+  console.log(data)
+  data.password = await hashPassword(data.password)
   console.log(data)  
-  const newUser = new User(body)
+  const newUser = new User(data)
   try {
     const savedUser = await newUser.save()
     return res.status(201).send(savedUser)

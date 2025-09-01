@@ -1,6 +1,6 @@
 const passport = require('passport');
 const { Strategy } = require('passport-local');
-const { mockUsers } = require('../utils/constants');
+const { comparePassword } = require('../utils/helpers');
 const { User } = require('../mongoose/schemas/user');
 
 
@@ -26,7 +26,7 @@ passport.use(
         try {
             const findUser = await User.findOne({ username })
             if (!findUser) throw new Error('User not found')
-            if (findUser.password !== password) throw new Error('Invalid credentials')
+            if (!comparePassword(password, findUser.password)) throw new Error('Invalid credentials')
             done(null, findUser);
         } catch (err) {
             done(err, null);
