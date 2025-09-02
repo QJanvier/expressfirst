@@ -8,12 +8,14 @@ const app = express()
 app.use(passport.initialize())
 app.use(passport.session())
 
-router.post('/api/auth', passport.authenticate('local'), (req, res) => {
-  console.log(`Inside /api/auth endpoint`)
-  console.log(req.user)
-  console.log(req.session)
-  return req.user ? res.send(req.user) : res.sendStatus(401)
-})
+
+router.post("/api/auth", passport.authenticate("local"),	(request, response) => {
+		response.sendStatus(200);
+	});
+
+router.get("/api/auth/status", (request, response) => {
+	return request.user ? response.send(request.user) : response.sendStatus(401);
+});
 
 router.post('/api/auth/logout', (req, res) => {
   if (!req.user) return res.sendStatus(401)
