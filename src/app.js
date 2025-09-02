@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
 const mongoose = require('mongoose')
+const MongoStore = require('connect-mongo')
 const app = express()
 
 mongoose.connect('mongodb://localhost/express')
@@ -16,9 +17,11 @@ app.use(cookieParser("mySecret"))
 app.use(session(
   {
     secret: "mySecret",
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false,
-    cookie: { maxAge: 60000 * 60 }}
+    cookie: { maxAge: 60000 * 60 },//1 hour
+    store: MongoStore.create({ client: mongoose.connection.getClient() })
+  }
 ))
 app.use(passport.initialize())
 app.use(passport.session())
