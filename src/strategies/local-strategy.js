@@ -6,6 +6,7 @@ const { User } = require('../mongoose/schemas/user');
 
 passport.serializeUser((user, done) => {
     console.log(`Inside Serialize User`)
+    console.log(user)
     done(null, user.id)
 })
 

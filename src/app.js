@@ -27,14 +27,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(routes)
 
-
 const PORT =  process.env.PORT || 3000
 
 app.listen(PORT, console.log(`Server running on port ${PORT}`))
 
 app.get('/',  (req, res) =>{
-  console.log(req.session)
-  console.log(req.sessionID)
   req.session.visited = true
   res.cookie('Pedro', 'express', { maxAge: 60000, signed: true })
   res.status(201).send({msg: 'Hello World'})

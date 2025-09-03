@@ -1,5 +1,6 @@
 const express = require('express')
 const passport = require('passport')
+const discordStrategy = require('../strategies/discord-strategy')
 const localStrategy = require('../strategies/local-strategy')
 const router = require('express').Router()
 const app = express()
@@ -24,5 +25,14 @@ router.post('/api/auth/logout', (req, res) => {
     return res.send({ msg: 'Logged out' })
   })
 })
+
+//discord auth routes
+router.get('/api/auth/discord', passport.authenticate('discord'))
+router.get('/api/auth/discord/redirect', passport.authenticate('discord'), (req, res) => {
+  console.log(req.session, req.user)
+  res.sendStatus(200)
+})
+
+
 
 module.exports = router
