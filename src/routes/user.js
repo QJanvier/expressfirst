@@ -4,7 +4,8 @@ const { mockUsers } = require('../utils/constants');
 const { createUserValidationSchema } = require('../utils/validationSchemas');
 const { resolveIndexByUserId } = require('../utils/middlewares');
 const { hashPassword } = require('../utils/helpers');
-const {User} = require('../mongoose/schemas/user');
+const { User } = require('../mongoose/schemas/user');
+const { getUserByIdHandler } = require('../handlers/users');
 
 router.get('/api/users',
     query('filter')
@@ -32,13 +33,7 @@ router.get('/api/users',
           return res.send(mockUsers)  
 })
 
-router.get('/api/users/:id', resolveIndexByUserId, (req, res) => {
-    const { findUserIndex } = req
-    const findUser = mockUsers[findUserIndex]
-    if (!findUser) 
-        return res.status(404).send({msg: 'User not found'})
-        return res.send(findUser)
-})
+router.get('/api/users/:id', resolveIndexByUserId, getUserByIdHandler)
 
 router.post('/api/users', checkSchema(createUserValidationSchema), async (req, res) => {
   const result = validationResult(req)
